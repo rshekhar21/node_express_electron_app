@@ -1,0 +1,84 @@
+<%-include('../templates/modalhead.ejs') %>
+  <div class="modal-body">
+    <form class="row g-3" id="input-form">
+      <!-- 1st row -->
+      <div class="col-md-6">
+        <label for="mname" class="form-label">Material Name</label>
+        <input type="text" class="form-control" id="mname" name="mname">
+      </div>
+      <div class="col-md-3">
+        <label for="mcode" class="form-label">Material Code</label>
+        <input type="text" class="form-control" id="mcode" name="mcode">
+      </div>      
+      <div class="col-md-3">
+        <label for="unitype" class="form-label">Unit-Type</label>
+        <select id="unitype" class="form-select" name="unitype">
+          <option selected value=""></option>
+          <option value="Meter">Meter</option>
+          <option value="Foot">Foot</option>
+          <option value="Pieces">Pieces</option>
+          <option value="Person">Person</option>
+          <option value="Labour">Labour</option>
+          <option value="Unit">Unit</option>
+          <option value="Box">Box</option>
+          <option value="na">N/A</option>
+        </select>
+      </div>
+
+      <!-- 2nd row -->
+      <div class="col-md-4">
+        <label for="unitcost" class="form-label">Unit Cost</label>
+        <input type="number" class="form-control" id="unitcost" name="unitcost">
+      </div>
+      <div class="col-md-4">
+        <label for="qtypurch" class="form-label">Qty. Purchased</label>
+        <input type="number" class="form-control" id="qtypurch" name="qtypurch">
+      </div>
+      <div class="col-md-4">
+        <label for="purchcost" class="form-label">Purchase Cost</label>
+        <input type="number" class="form-control" id="purchcost" name="purchcost">
+      </div>
+      
+
+      <!-- 3rd row -->
+      <div class="col-md-5">
+        <label for="givento" class="form-label">Given To</label>
+        <select id="givento" class="form-select fs-6" name="givento">
+          <option></option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="unitsgiven" class="form-label">Units Given</label>
+        <input type="number" class="form-control" id="unitsgiven" name="unitsgiven">
+      </div>
+      <div class="col-md-4">
+        <label for="purchon" class="form-label">Purchased On</label>
+        <input type="date" class="form-control" id="purchon" name="purchon">
+      </div>
+      
+      
+
+      <!-- 4th row -->      
+      <div class="col-md-8">
+        <label for="cmnts" class="form-label">Comments / Notes</label>
+        <input type="text" class="form-control" id="cmnts" name="cmnts">
+      </div>
+      <div class="col-md-4">
+        <label for="supplier" class="form-label">Supplier</label>
+        <input type="text" class="form-control" id="supplier" name="supplier" list="existing">
+        <datalist id="existing"></datalist>
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control d-none" id="delid" name="delid" autocomplete="off">
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control d-none" id="uuid" name="uuid" autocomplete="off">
+      </div>      
+      <%-include('../templates/modalfootbuttons.ejs') %>
+    </form>
+  </div>
+
+  <!-- footer -->
+  <%-include('../templates/modalfoot.ejs') %>
+  <script src="/js/material.js" type="module"></script>
+<%-include('../templates/footer.ejs') %>

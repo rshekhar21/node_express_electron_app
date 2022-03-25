@@ -1,0 +1,78 @@
+<%-include('../templates/modalhead.ejs') %>
+  <div class="modal-body">
+    <form class="row g-3" id="input-form">
+      <div class="col-md-5">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" name="name">
+      </div>
+      <div class="col-md-3">
+        <label for="contact" class="form-label">Contact</label>
+        <input type="tel" class="form-control" id="contact" name="contact">
+      </div>
+      <div class="col-md-4">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email">
+      </div>
+      <!-- <div class="col-12">
+        <label for="address" class="form-label">Local Address</label>
+        <input type="text" class="form-control" id="address" placeholder="" name="address">
+      </div>
+
+      <div class="col-md-6">
+        <label for="city" class="form-label">City</label>
+        <input type="tel" class="form-control" id="city" name="city">
+      </div>
+      <div class="col-md-4">
+        <label for="state" class="form-label">State</label>
+        <select id="state" class="form-select" name="state">
+          <option selected>Delhi NCR</option>
+          <option>Noida</option>
+          <option>GZB.</option>
+          <option>Fardidabad</option>
+          <option>Meruth</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="pincode" class="form-label">Pincode</label>
+        <input type="text" class="form-control" id="pincode" name="pincode">
+      </div> -->
+
+      <div class="col-md-3">
+        <label for="balance" class="form-label">Opening Balance</label>
+        <input type="number" class="form-control" id="balance" name="balance">
+      </div>
+
+      <div class="col-md-3">
+        <label for="baltype" class="form-label">Balance Type...</label>
+        <select id="baltype" class="form-select" name="baltype">
+          <!-- <option selected>N/A</option> -->
+          <option>Pay</option>
+          <option>Receive</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="bdate" class="form-label">Balance on Date</label>
+        <input type="date" class="form-control" id="bdate" name="bdate">
+      </div>
+      <div class="col-md-3">
+        <label for="refby" class="form-label">Reference</label>
+        <input type="text" class="form-control" id="refby" name="refby">
+      </div>
+
+      <!-- comments box -->
+      <div class="col-md-12">
+        <div class="form-floating">
+          <textarea class="form-control" name="comments" placeholder="Leave a comment here" id="comments" style="height: 100px"></textarea>
+          <label for="comments">Comments / Notes</label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control d-none" id="delid" name="delid">
+      </div>
+      <%-include('../templates/modalfootbuttons.ejs') %>
+    </form>
+  </div>
+<%-include('../templates/modalfoot.ejs') %>
+<div></div>
+<script src="/js/contractor.js" type="module"></script> 
+<%-include('../templates/footer.ejs') %>

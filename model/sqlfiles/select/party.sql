@@ -1,0 +1,16 @@
+SELECT id
+	, party
+	, reg_date
+	, ptype
+	, fullname
+	, contact
+	, email
+	, local_address
+	, debit
+	, credit
+	, bdate
+	, pan_num
+	, refby
+	, comments
+	, stamp
+	FROM public.party;

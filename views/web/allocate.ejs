@@ -1,0 +1,46 @@
+<%-include('../templates/modalhead.ejs') %>
+  <div class="modal-body">
+    <form class="row g-3" id="input-form">
+      <!-- 1st row -->
+      <div class="col-md-6">
+        <label for="givento" class="form-label">Contractor</label>
+        <select id="givento" class="form-select fs-6" name="givento">
+          <option></option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label for="matid" class="form-label">Raw Material</label>
+        <select id="matid" class="form-select fs-6" name="matid">
+          <option></option>
+        </select>
+      </div>
+
+      <!-- 2nd row -->
+      <div class="col-md-4">
+        <label for="unitsavl" class="form-label">Units Available</label>
+        <input type="number" min="0" class="form-control" id="unitsavl" name="unitsavl" disabled>
+      </div>
+      
+      <div class="col-md-4">
+        <label for="unitsgiven" class="form-label">Units Given</label>
+        <input type="number" min="0" class="form-control" id="unitsgiven" name="unitsgiven">
+      </div>
+      <div class="col-md-4">
+        <label for="purchon" class="form-label">Given on Data</label>
+        <input type="date" class="form-control" id="purchon" name="purchon">
+      </div>
+      
+
+      <!-- 3rd row -->
+      <div class="col-md-12">
+        <label for="cmnts" class="form-label">Comments / Notes</label>
+        <input type="text" class="form-control" id="cmnts" name="cmnts">
+      </div>    
+      <span class="d-none" id="delid"></span>
+      <%-include('../templates/modalfootbuttons.ejs') %>
+    </form>
+  </div>
+<%-include('../templates/modalfoot.ejs') %>
+<script src="/js/allocate.js" type="module"></script> 
+<%-include('../templates/footer.ejs') %>

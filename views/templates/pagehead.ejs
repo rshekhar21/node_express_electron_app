@@ -1,0 +1,78 @@
+<%-include('../templates/header.ejs') %>
+  <div class="container">
+      <div class="row mt-3">
+        <div class="col">
+          <h5>
+            <!-- <div class="shadow-sm p-2 mb-4 bg-body rounded" id="page-heading"></div> -->
+            <!-- <div class="border-bottom border-info border-2 p-2 mb-4" id="page-heading"></div> -->
+            
+            <div class="d-flex justify-content-between border-bottom border-info border-2 p-2">
+              <div class="" id="page-heading"></div>
+              <div class="" id="page-subhead"></div>
+            </div>
+          </h5> 
+
+          <div class="row my-4">
+            <div class="d-flex justify-content-between">
+              <div class="btn-group" role="group" aria-label="Basic example" id="btnGroup">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="first-groupbtn">Create New</button>
+                <button type="button" class="btn btn-outline-primary" id="second-groupbtn">Refresh List</button>
+                <button type="button" class="btn btn-outline-primary" id="third-groupbtn">Home</button>
+              </div>
+              <div>
+                <!-- <button type="button" id="btn-execute" class="btn btn-outline-success d-none">Execute</button> -->
+                <div class="btn-group d-none" role="group" aria-label="Basic example" id="btnGroup1">
+                  <!-- <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+                    Tooltip on top
+                  </button> -->
+                  <button type="button" id="execute" class="btn btn-outline-success">Execute</button>
+                  <!-- <button type="button" id="" class="btn btn-outline-success" disabled>#</button> -->
+                  <button type="button" id="reset-order" class="btn btn-outline-secondary">Reset</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- <div class="alert alert-warning alert-dismissible fade show d-none" id="alert-box1" role="alert">
+              A simple danger alert—check it out!
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div> -->
+            <div id="liveAlertPlaceholder"></div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- table full width -->
+    <div class="container-fluid mt-4">
+      <div class="row">
+        <div class="col">
+          <table class="table table-hover" id="my-table"></table>
+        </div>
+      </div>
+    </div>
+
+    <div id="myOffcanvas">
+      <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+        <div class="offcanvas-header">
+          <h5 id="offcanvasTopLabel"></h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body pb-3" id="offcanvasbody">
+          <table class="table table-sm" id="table-list"></table>
+        </div>
+      </div>
+    </div>
+    
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img src="..." class="rounded me-2" alt="...">
+        <strong class="me-auto">Bootstrap</strong>
+        <small>11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        Hello, world! This is a toast message.
+      </div>
+    </div>

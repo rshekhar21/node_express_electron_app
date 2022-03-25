@@ -1,0 +1,32 @@
+<%-include('../templates/modalhead.ejs') %>
+  <div class="modal-body">
+    <form class="row g-3" id="input-form">
+      <div class="col-md-7">
+        <label for="pname" class="form-label">Product Name</label>
+        <input type="text" class="form-control" id="pname" name="pname">
+      </div>
+      <div class="col-md-5">
+        <label for="pcode" class="form-label">Product Code</label>
+        <input type="text" class="form-control" id="pcode" name="pcode">
+      </div>
+
+      <div class="col-md-12">
+        <label for="comments" class="form-label">Product Description</label>
+        <input type="text" class="form-control" id="comments" name="comments">
+      </div>
+      <!-- <input type="text" class="form-control" id="contractor" name="comments" list="existing"> -->
+      <!-- <div class="col-md-5">
+        <label for="contractor" class="form-label">Contractor</label>
+        <select id="contractor" class="form-select fs-6" name="contractor">
+          <option selected></option>
+        </select>
+      </div> -->
+      <div class="col-md-4">
+        <input type="text" class="form-control d-none" id="delid" name="delid">
+      </div>
+      <%-include('../templates/modalfootbuttons.ejs') %>
+    </form>
+  </div>
+<%-include('../templates/modalfoot.ejs') %>
+<script src="/js/product.js" type="module"></script> 
+<%-include('../templates/footer.ejs') %>

@@ -1,0 +1,1 @@
+SELECT * FROM party p INNER JOIN shipping s on p.party = s.party;

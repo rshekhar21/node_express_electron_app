@@ -1,0 +1,197 @@
+<%-include('../templates/modalhead.ejs') %>
+  <div class="modal-body">
+    <form class="row g-3" id="modal-form">    
+      <!-- 1st row -->
+      <div class="col-md-8">
+        <label for="material" class="form-label">Select Material</label>
+        <input class="form-control text-capitalize" list="materialList" id="material" name="material" placeholder="Type to search...">
+        <datalist id="materialList"></datalist>
+      </div>
+      <div class="col-md-4">
+        <label for="unitype" class="form-label">Select Unit type</label>
+        <input class="form-control" list="unitTypeList" id="unitype" name="unitype" placeholder="Type to search...">
+        <datalist id="unitTypeList">
+          <option value="Meter">
+          <option value="Pieces">
+          <option value="Foot">
+          <option value="Labour">
+        </datalist>
+      </div>
+
+      <!-- 2nd row -->
+      <div class="col-md-4">
+        <label for="untavailable" class="form-label">Unit Availabe</label>
+        <input type="number" class="form-control" id="untavailable" name="untavailable" disabled>
+      </div>
+      <div class="col-md-4">
+        <label for="unitcost" class="form-label">Unit Cost</label>
+        <input type="number" class="form-control" id="unitcost" name="unitcost">
+      </div>
+      <div class="col-md-4">
+        <label for="unitreq" class="form-label">Unites Required Per Piece</label>
+        <input type="number" class="form-control" id="unitreq" name="unitreq">
+      </div>
+      <div class="col-md-12">
+        <input type="text" class="form-control d-none" id="delid" name="delid">
+      </div>
+      <%-include('../templates/modalfootbuttons.ejs') %>
+    </form>
+  </div>
+<%-include('../templates/modalfoot.ejs') %>
+
+<div class="container">
+  <!-- <div class="row g-3">
+    <form id="order-form">
+      <div class="col-12 d-flex justify-content-between">
+          <div class="col-md-7  col-sm-12 d-flex justify-content-start">            
+            <div class="col-md-5 me-4">
+              <label for="contractor" class="form-label">Contractor</label>
+              <select id="contractor" class="form-select fs-6" name="contractor">
+                <option></option>
+              </select>
+            </div>
+            <div class="col-md-5">
+              <label for="product" class="form-label">Product</label>
+              <select id="product" class="form-select fs-6" name="product">
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-12 d-flex justify-content-end">
+            <div class="col-md-5 me-4">
+              <label for="orderqty" class="form-label">Order Quantity</label>
+              <input type="number" class="form-control" id="orderqty" name="orderqty" autocomplete="off">
+            </div>
+            <div class="col-md-5">
+              <label for="orderdate" class="form-label">Order Date</label>
+              <input type="date" class="form-control" id="orderdate" name="orderdate" autocomplete="off">
+            </div>
+          </div>
+      </div>
+    </form>
+  </div> -->
+
+  
+  <!-- <div class="row g-3">
+    <form id="order-form">
+      <div class="col-md-12 d-flex justify-content-between">
+          <div class="col-6  d-flex justify-content-start"> 
+            <div class="col-md-6">
+              <label for="orderqty" class="form-label">Order Quantity</label>
+              <input type="number" class="form-control" id="orderqty" name="orderqty" autocomplete="off">
+            </div>           
+            <div class="col-md-5 me-4 d-none">
+              <label for="contractor" class="form-label">Contractor</label>
+              <select id="contractor" class="form-select fs-6" name="contractor">
+                <option></option>
+              </select>
+            </div>
+            <div class="col-md-5 d-none">
+              <label for="product" class="form-label">Product</label>
+              <select id="product" class="form-select fs-6" name="product">
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6 d-flex justify-content-end">
+            <div class="col-md-5 me-4 d-none">
+              <label for="orderqty" class="form-label">Order Quantity</label>
+              <input type="number" class="form-control" id="orderqty" name="orderqty" autocomplete="off">
+            </div>
+            <div class="col-md-6">
+              <label for="orderdate" class="form-label">Order Date</label>
+              <input type="date" class="form-control" id="orderdate" name="orderdate" autocomplete="off">
+            </div>
+          </div>
+      </div>
+    </form>
+  </div> -->
+  <!-- <h5 class="my-4">Order Unit Details</h5> -->
+
+  <form class="row g-3" id="order-form">
+    <div class="col-lg-3">
+      <label for="contractor" class="form-label">Contractor</label>
+              <select id="contractor" class="form-select fs-6" name="contractor">
+                <option></option>
+              </select>
+    </div>
+    <div class="col-lg-3">
+      <label for="product" class="form-label">Product</label>
+              <select id="product" class="form-select fs-6" name="product">
+                <option></option>
+              </select>
+    </div>
+    <div class="col-lg-3">
+      <label for="orderqty" class="form-label">Order Quantity</label>
+              <input type="number" class="form-control" id="orderqty" name="orderqty" autocomplete="off">
+    </div>
+    <div class="col-lg-3">
+      <label for="orderdate" class="form-label">Order Date</label>
+              <input type="date" class="form-control" id="orderdate" name="orderdate" autocomplete="off">
+    </div>    
+  </form>
+
+  <table class="table mt-5 css-serial" id="order-table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">matid</th>
+        <th scope="col">Material Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Cost</th>
+        <th scope="col">Req/Piece</th>
+        <th scope="col">Req/Order</th>
+        <th scope="col">Cost/Piece</th>
+        <!-- <th scope="col">Given</th> -->
+        <th scope="col">Total</th>
+        <th scope="col">!</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+    <!-- <tbody id="tbody"><tr><td></td><td role="button" class="text-primary idcol">m_dfzg</td><td>big button</td><td>Pieces</td><td>5</td><td>5</td><td>250</td><td>25</td><td>1250</td><td><button type="button" class="btn-close delrow" style="width:4px; height: 4px;" aria-label="Close"></button></td></tr><tr><td></td><td role="button" class="text-primary idcol">m_dfzg</td><td>big button</td><td>Pieces</td><td>5</td><td>5</td><td>250</td><td>25</td><td>1250</td><td><button type="button" class="btn-close delrow" style="width:4px; height: 4px;" aria-label="Close"></button></td></tr><tr><td></td><td role="button" class="text-primary idcol">m_dfzg</td><td>big button</td><td>Pieces</td><td>5</td><td>5</td><td>250</td><td>25</td><td>1250</td><td><button type="button" class="btn-close delrow" style="width:4px; height: 4px;" aria-label="Close"></button></td></tr><tr><td></td><td role="button" class="text-primary idcol">m_dfzg</td><td>big button</td><td>Pieces</td><td>5</td><td>5</td><td>250</td><td>25</td><td>1250</td><td><button type="button" class="btn-close delrow" style="width:4px; height: 4px;" aria-label="Close"></button></td></tr></tbody> -->
+  </table>
+  <div class="row mt-5">
+    <div class="col-7">
+      <div class="form-floating mt-4">
+        <textarea class="form-control" placeholder="Leave a comment here" id="commentbox" style="height: 100px"></textarea>
+        <label for="commentbox">Comments</label>
+      </div>
+    </div>
+    <div class="col-5 d-flex justify-content-end text-end">
+      <div>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                <!-- <label for="miscexp" class="col-form-label col-form-label-sm">Misc. Expense</label> -->
+                <label for="miscexp" class="form-label">Add Misc. Expense</label>
+              </td>
+              <td>
+                <input
+                  class="text-end form-control form-control-sm"
+                  type="number"
+                  min="0"
+                  style="width: 100px; outline: none;"
+                  id="miscexp"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Single Artcle Cost</td>
+              <td id="articlecost">0.00</td>
+            </tr>
+                        
+            <tr class="fw-bold">
+              <td>Order Total</td>
+              <td id="alltotal">0.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="/js/order.js" type="module"></script> 
+<%-include('../templates/footer.ejs') %>

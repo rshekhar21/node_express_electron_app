@@ -1,0 +1,1 @@
+SELECT * FROM payments M INNER JOIN party P on M.party = P.party;
