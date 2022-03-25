@@ -7,6 +7,7 @@ async function setupDatabase(key) {
     return 'Invalid Key'
   } else {
     try {
+      
       //drop all
       sql = await readQuery('all', 'd')
       await runSql(sql);
