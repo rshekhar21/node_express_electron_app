@@ -8,3 +8,52 @@ content-type: application/json
 ###
 
 GET http://localhost:3333/api/crud/select/query?sql=SELECT * FROM party;
+
+###
+
+POST http://localhost:3333/api/crud/create/party 
+content-type: application/json 
+
+{
+  "address": "S-9, Vivek Apartments, Shrestha Vihar",
+  "balamt": "25",
+  "baldate": "2022/03/26",
+  "baltype": "Pay",
+  "comments": "",
+  "contact": "9910075648",
+  "credit": 25,
+  "debit": 0,
+  "email": "rshekhar21@gmail.com",
+  "name": "Raj Shekhar Singh",
+  "pan": "",
+  "party": "n_xY66",
+  "ptype": "Contractor",
+  "refby": "",
+  "regdate": "2022/03/26"
+}
+
+###
+GET http://localhost:3333/api/crud/select/party 
+###
+
+POST http://localhost:3333/api/crud/update/party 
+content-type: application/json 
+
+{
+  "address": "",
+  "balamt": "2500",
+  "baldate": "2022/03/26",
+  "baltype": "Receive",
+  "comments": "",
+  "contact": "9910099100",
+  "credit": 2500,
+  "debit": 0,
+  "email": "shekhar@gmail.com",
+  "id": 2,
+  "name": "shekhar",
+  "pan": "BKLPS9633P",
+  "party": "c_koA9",
+  "ptype": "Customer",
+  "refby": "rajesh",
+  "regdate": "2022/03/26"
+}

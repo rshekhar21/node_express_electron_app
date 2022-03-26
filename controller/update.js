@@ -1,5 +1,5 @@
 const model = require('../model/update')
-
+const log=console.log;
 async function executeUpdate(req, res, obj) {
   try {
     let rs = await obj(req.body)

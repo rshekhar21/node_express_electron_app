@@ -1,11 +1,12 @@
 const { readQuery, runSql, tables } = require('./_db')
-let sql = '';
+const log=console.log;
+let sql='';
 
 async function party(data) {
-  const {regdate, ptype, name, contact, email, address, debit, credit, bdate, pan_num, refby, comments, id } = data;
-    
-  sql = await readQuery(tables.party, 'u')
-  return await runSql(sql,[regdate, ptype, name, contact, email, address, debit, credit, bdate, pan_num, refby, comments, id])
+  const {regdate, ptype, name, contact, email, address, debit, credit, baldate, pan, refby, comments, id } = data;
+  
+  sql=await readQuery(tables.party, 'u')
+  return await runSql(sql,[regdate, ptype, name, contact, email, address, debit, credit, baldate, pan, refby, comments, id])
 }
 
 async function product(data) {

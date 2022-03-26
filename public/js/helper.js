@@ -86,9 +86,10 @@ async function set_and_refresh_data_table_test(obj, callback) {
     thead,
     tableId
   }
-  log(prams)
+  // log(prams)
   const arr=await setTable(prams)
   if (callback) callback(arr);
+  return
 }
 
 //  data, tblid='my-table', linkcell='id'
@@ -222,10 +223,17 @@ function getPureValue(string, side=1, dlimiter='/') {
 }
 
 
-
 function setPage(obj) {
-  let { title }=obj
+  let {
+    title,
+    displayButtonBar=true,
+    firstButtonName='Create New',
+    secondButtonName='View List',
+    thirdButtonName='Home'
+  }=obj
   document.getElementById('page-heading').innerHTML=title
+  const btnbar = document.getElementById('btn-bar')
+  if (!displayButtonBar) btnbar.classList.add('d-none')
 }
 
 async function queryResult(sql) {
@@ -235,6 +243,28 @@ async function queryResult(sql) {
     return data.rs[0]
   }
 }
+
+async function createOrUpdateTable(obj) {
+  let {
+    data, //this data is to insert new or update record
+    tblName, // this is database table name
+    create=true, // if true it will create new record else it will be used to update
+  }=obj
+  
+  if (!data) return false;
+  let url=null;
+  if (create) {
+    url=`/api/crud/create/${tblName}`
+  } else {
+    data.id = +document.getElementById('delid').innerText
+    url=`/api/crud/update/${tblName}`
+  }
+  // log(data)
+  // return
+  return await postData(url, data)
+}
+
+
 
 
 export default {
@@ -256,7 +286,8 @@ export default {
   set_and_refresh_data_table_test,
   setPage,
   queryResult, 
-  test: ()=>alert('ok')
+  test: () => alert('ok'),
+  createOrUpdateTable
 }
 
 

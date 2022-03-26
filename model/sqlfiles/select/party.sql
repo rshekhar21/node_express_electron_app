@@ -1,16 +1,16 @@
 SELECT id
 	, party
-	, reg_date
+	, to_char(reg_date, 'DD/MM/YYYY') reg_date
 	, ptype
 	, fullname
 	, contact
 	, email
-	, local_address
+	, local_address	as address
 	, debit
 	, credit
-	, bdate
-	, pan_num
+	, to_char(bdate, 'DD/MM/YYYY') bal_data
+	, pan_num as pan
 	, refby
 	, comments
-	, stamp
-	FROM public.party;
+	FROM public.party
+	ORDER BY id DESC;

@@ -1,5 +1,5 @@
 UPDATE public.party	SET 
-  reg_date=($1)
+    reg_date=($1)
   , ptype=($2)
   , fullname=($3)
   , contact=($4)

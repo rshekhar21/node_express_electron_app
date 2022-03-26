@@ -34,9 +34,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     inputForm.reset();
     btnSubmit.innerText='Add'
     document.getElementById('delete').classList.add('d-none')
-    // document.getElementById('unitsavl').disabled =false
     alertBox.classList.add('d-none')
-    // document.getElementById('givento').disabled =false
   })
 
   // functin to crate or updat party
@@ -63,9 +61,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   }
   
   function set_and_refresh_data_table() {
-
     let obj={
-      //add linkcell:'id'/'etc' and thead:true/false for desired result
       url: `/api/crud/select/${tblName}`,
     }
     help.set_and_refresh_data_table_test(obj, setRows)

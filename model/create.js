@@ -3,10 +3,15 @@ const log=console.log;
 let sql = '';
 
 async function party(data) {
-  const { party, regdate, ptype, name, contact, email, address, debit, credit, bdate, pan_num, refby, comments} = data;
+  const { party, regdate, ptype, name, contact, email, address, debit, credit, baldate, pan, refby, comments }=data;
+  
+  // const r=Object.values(data);
+  // log(r)
 
+  // // log(data)
+  // return
   sql = await readQuery(tables.party, 'n')
-  return await runSql(sql,[party, regdate, ptype, name, contact, email, address, debit, credit, bdate, pan_num, refby, comments])
+  return await runSql(sql,[party, regdate, ptype, name, contact, email, address, debit, credit, baldate, pan, refby, comments])
 }
 
 async function product(data) {
