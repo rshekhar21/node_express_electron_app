@@ -63,6 +63,10 @@ function allocate() {
   return selectRecords(tables.allocate)
 }
 
+function daybook() {
+  return selectRecords(tables.daybook)
+}
+
 function aud() {
   return selectRecords('aud')
 }
@@ -79,6 +83,7 @@ async function opensql(sql) {
 module.exports = {
   party,
   contractor,
+  daybook,
   gstdetails,
   bankdetails,
   employee,

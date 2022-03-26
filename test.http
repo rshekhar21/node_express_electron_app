@@ -57,3 +57,43 @@ content-type: application/json
   "refby": "rajesh",
   "regdate": "2022/03/26"
 }
+
+
+###
+GET http://localhost:3333/api/crud/select/query?sql=select concat(fullname, ' /', party) as name from party order by fullname asc
+
+###
+
+GET http://localhost:3333/api/crud/select/query?sql=select * from daybook
+
+
+###
+
+POST http://localhost:3333/api/crud/create/daybook 
+content-type: application/json 
+
+{
+  "amtpaid": 2500,
+  "comments": "paid for test",
+  "edate": "2022/03/26",
+  "name": "mahesh",
+  "party": "n_rbso",
+  "pmode": "cash",
+  "received": 0
+}
+
+###
+
+POST http://localhost:3333/api/crud/update/daybook
+content-type: application/json 
+
+{    
+  "pmode": "online",
+  "comments": "abcd",
+  "name": "raj singh",
+  "edate": "2022/3/21", 
+  "amtpaid": 2500,
+  "received": 0,
+  "party": "n_rbso",
+  "id": 4
+}

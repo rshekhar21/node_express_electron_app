@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     }
     if(data.ptype==='Contractor') data.party='n_'+uuid;
     if(data.ptype==='Customer') data.party='c_'+uuid;
-    if(data.ptype==='Suppler') data.party='s_'+uuid;
+    if(data.ptype==='Supplier') data.party='s_'+uuid;
     if(data.ptype==='Employee') data.party='e_'+uuid;
 
     data.regdate=help.sqlDate(data.regdate);

@@ -33,10 +33,10 @@ async function bankdetails(data) {
 }
 
 async function daybook(data) {
-  const {party, edate, debit, credit, pmode, narraction, id } = data;
-
-  sql = await readQuery(tables.daybook, 'u')
-  return await runSql(sql,[party, edate, debit, credit, pmode, narraction, id ])
+  const {party, name, edate, amtpaid, received, pmode, comments, id } = data;
+ 
+  sql=await readQuery(tables.daybook, 'u')
+  return await runSql(sql,[pmode, comments, name, edate, amtpaid, received, party, id ])
 }
 
 async function employee(data) {

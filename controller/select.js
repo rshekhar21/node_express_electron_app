@@ -33,9 +33,9 @@ function bankdetails(req, res) {
   executeRead(req, res, model.bankdetails)
 }
 
-// function daybook(req, res) {
-//   executeRead(req, res, model.daybook)
-// }
+function daybook(req, res) {
+  executeRead(req, res, model.daybook)
+}
 
 function employee(req, res) {
   executeRead(req, res, model.employee)
@@ -95,7 +95,7 @@ module.exports = {
   product,
   material,
   bankdetails,
-  // daybook,
+  daybook,
   employee,
   gstdetails,
   orderitems,

@@ -1,5 +1,57 @@
 <%-include('../templates/modalhead.ejs') %>
-  <div class="modal-body"></div>
+  <div class="modal-body">
+    <form class="row g-3" id="entry-form">
+      <!-- 1st row -->
+      <div class="col-md-8">
+        <label for="party" class="form-label">Select Party</label>
+        <input class="form-control" list="party-list" id="party" name="party" placeholder="Type to search..." required>
+        <datalist id="party-list"></datalist>
+      </div>
+      <div class="col-md-4">
+        <label for="edate" class="form-label">Entry Date</label>
+        <input type="date" class="form-control" id="edate" name="edate">
+      </div>
+      
+      
+      
+      <!-- 2nd row -->
+      <div class="col-md-4">
+        <label for="amtpaid" class="form-label">Amount Paid</label>
+        <input type="number" class="form-control" id="amtpaid" name="amtpaid">
+      </div>
+      <div class="col-md-4">
+        <label for="received" class="form-label">Amount Received</label>
+        <input type="text" class="form-control" id="received" name="received">
+      </div>
+      <div class="col-md-4">
+        <label for="pmode" class="form-label">Payment Mode</label>
+        <select id="pmode" class="form-select" name="pmode">
+          <option value="cash">cash</option>
+          <option value="card">card</option>
+          <option value="online">online</option>
+          <option value="ewallet">ewallet</option>
+          <option value="other">other</option>
+        </select>
+      </div>
+      
+      <!-- comments box -->
+      <div class="col-md-12">
+        <div class="form-floating">
+          <textarea class="form-control" name="comments" placeholder="Leave a comment here" id="comments" style="height: 100px"></textarea>
+          <label for="comments">Comments / Notes</label>
+        </div>
+      </div>
+      
+
+      <span class="d-none" id="delid"></span>
+      <%-include('../templates/modalfootbuttons.ejs') %>
+    </form>
+  </div>
+  <span class="d-none" id="delid"></span>
 <%-include('../templates/modalfoot.ejs') %>
+
+ 
+
+
 <script src="/js/daybook.js" type="module"></script> 
 <%-include('../templates/footer.ejs') %>

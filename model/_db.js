@@ -44,7 +44,7 @@ const cnstr = {
   user: 'postgres',
   port: '5432',
   password: '269608',
-  database: 'ebook',
+  database: 'TestDB',
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,

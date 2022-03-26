@@ -96,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
   btnGroupRight.classList.remove('d-none')
   subHead.innerHTML = `OrderID # ( <span class="text-primary" id=order-id>${orderId}</span> )` 
 
-
  
   //set unit-type and unit-required in modal form
   material.addEventListener('input', async function (e) {
