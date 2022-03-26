@@ -97,3 +97,6 @@ content-type: application/json
   "party": "n_rbso",
   "id": 4
 }
+
+###
+GET http://localhost:3333/api/crud/select/query?sql=select id, party, fullname, to_char(entry_date, 'DD/MM/YYYY'), amt_paid, amt_received, pymt_mode, narraction commetns from daybook where entry_date = '2022/03/01' order by entry_date desc;

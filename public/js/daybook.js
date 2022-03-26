@@ -13,6 +13,24 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnDelete=document.getElementById('delete')
   const alertBox=document.getElementById('alert-box')
 
+  const input=document.createElement('input')
+  input.type='date'
+  input.classList.add('ms-3', 'px-1')
+  input.style.cssText='border:1px solid #0d6efd'
+  input.id = 'view-date'
+  document.getElementById('btnGroup').append(input)
+  const inputDate = document.getElementById('view-date')
+
+  const btn=document.createElement('button')
+  btn.className='btn btn-outline-primary'
+  btn.id = 'view-datewise'
+  btn.innerHTML = 'View'
+  document.getElementById('btnGroup').append(btn)
+
+  const viewDatewise = document.getElementById('view-datewise')
+
+  const refreshList=document.getElementById('second-groupbtn');
+
   const myModal=document.getElementById('staticBackdrop')
   const Modal=new bootstrap.Modal(document.getElementById('staticBackdrop'), {
     keyboard: false
@@ -34,9 +52,10 @@ document.addEventListener('DOMContentLoaded', function () {
     doc.getElementById('edate').value=help.sqlDate(null,'-')
   })
 
-  function refreshTable() {
-    let obj={ url: `/api/crud/select/${tblName}` }
-    help.set_and_refresh_data_table_test(obj, calback)
+  async function refreshTable(url=null) {
+    let obj = {} 
+    obj.url=url? url:`/api/crud/select/${tblName}`
+    const a = await help.set_and_refresh_data_table_test(obj, calback)
 
     function calback(arr) {
       if (!arr) return;
@@ -62,7 +81,12 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         })
       })
-    }    
+    }
+
+    a.forEach(function (r) {
+      r.cells[4].classList.add('text-danger')
+      r.cells[5].classList.add('text-success')
+    })
   }
 
   refreshTable();
@@ -123,5 +147,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       } 
     } 
+  })
+
+  refreshList.addEventListener('click', function (e) {
+    e.preventDefault();
+    refreshTable();
+    inputDate.value = null
+  })
+
+  viewDatewise.addEventListener('click', function (e) {
+    e.preventDefault()
+    let viewDate= inputDate.value;
+    viewDate = help.sqlDate(viewDate)
+    if (!viewDate) return false;
+    let sql = `select id, party, fullname, to_char(entry_date, 'DD/MM/YYYY'), amt_paid, amt_received, pymt_mode, narraction commetns from daybook where entry_date = '${viewDate}' order by entry_date desc;`
+    let url=`/api/crud/select/query?sql=${sql}`
+    refreshTable(url)
   })
 })

@@ -89,7 +89,7 @@ async function set_and_refresh_data_table_test(obj, callback) {
   // log(prams)
   const arr=await setTable(prams)
   if (callback) callback(arr);
-  return
+  return arr
 }
 
 //  data, tblid='my-table', linkcell='id'
