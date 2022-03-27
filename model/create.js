@@ -39,7 +39,6 @@ async function allocate(data) {
   return await runSql(sql,[matid, givento, +unitsgiven, purchon, cmnts])
 }
 
-
 async function bankdetails(data) {
   const {party, bankname, acntnumber, anctname, ifsc} = data;
   

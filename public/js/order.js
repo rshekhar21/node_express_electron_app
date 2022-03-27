@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
   const orderForm=document.getElementById('order-form')
   const inputFocus=document.getElementById('material')
   const btnReset=document.getElementById('resetForm')
-  const btnDelete=document.getElementById('delete')
+  const newOrder=document.getElementById('new-order')
   const alertBox=document.getElementById('alert-box')
   const btnExecute=document.getElementById('execute')
   const subHead=document.getElementById('page-subhead')
@@ -38,13 +38,25 @@ document.addEventListener('DOMContentLoaded', function (e) {
   const orderDate=document.querySelector('#orderdate')
   const updateQty=document.getElementById('orderqty')  
   const btnViewAlocaedList=document.getElementById('second-groupbtn')
+  const commentbox=document.getElementById('commentbox')
+  
   let insertIntoMaterial='';
+  let od = JSON.parse(localStorage.getItem('od'))
+  let ls = JSON.parse(localStorage.getItem('rs'))
+  let order=[];
   let sum=0
 
   btnViewAlocaedList.innerText = 'View Unit Details'
   btnViewAlocaedList.setAttribute('data-bs-toggle','offcanvas')
   btnViewAlocaedList.setAttribute('data-bs-target','#offcanvasTop')
   btnViewAlocaedList.setAttribute('aria-controls', 'offcanvasTop')
+
+  resetOrder.title='Double Click to Reset Order'
+  resetOrder.innerText='New Order'
+  
+  btnShowModal.innerHTML='Add Material'
+  btnGroupRight.classList.remove('d-none')
+  subHead.innerHTML = `OrderID # ( <span class="text-primary" id=order-id>${orderId}</span> )` 
 
   //data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"
 
@@ -58,15 +70,10 @@ document.addEventListener('DOMContentLoaded', function (e) {
   myOffcanvas.addEventListener('hide.bs.offcanvas', function (e) {
     document.getElementById('offcanvasTopLabel').innerHTML =''
   })
-
   
   orderForm.addEventListener('submit', function (e) {
     e.preventDefault();
   })
-
-  const order=[]
-  help.getAsList({sql: help.listSql.contractor, elementID:'contractor'})
-  help.getAsList({sql: help.listSql.product, elementID: 'product'})
   
   myModal.addEventListener('shown.bs.modal', function () {    
     inputFocus.focus()
@@ -92,10 +99,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
   myModal.addEventListener('show.bs.modal', function () {
   })
 
-  btnShowModal.innerHTML='Add Material'
-  btnGroupRight.classList.remove('d-none')
-  subHead.innerHTML = `OrderID # ( <span class="text-primary" id=order-id>${orderId}</span> )` 
-
+  newOrder.addEventListener('click', function (e) {
+    const orderTable=document.getElementById('tbody')
+    const arr=Array.from(orderTable)
+    if (arr) e.preventDefault();
+  })
  
   //set unit-type and unit-required in modal form
   material.addEventListener('input', async function (e) {
@@ -120,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         let r=await help.queryResult(sql)
         // log(r)
         let qty = r.qyt_aval // d.rs[0].qyt_aval
-        document.getElementById('untavailable').value=+qty // data.rs[0]
+        document.getElementById('unitsavl').value=+qty // data.rs[0]
         document.getElementById('unitype').value=iv.utype
         document.getElementById('unitcost').value=iv.ucost
         document.getElementById('unitreq').focus();
@@ -130,6 +138,48 @@ document.addEventListener('DOMContentLoaded', function (e) {
       document.getElementById('unitcost').value=''
     }  
   })
+  
+  resetOrder.addEventListener('click', function () { //dblclick
+    const confirmReset=confirm('Set New Order?')
+    if (confirmReset) {
+      // const tblarr=Array.from(tbody.rows)
+      // if (tblarr.length===0) return false
+      resetPage()
+    }
+  })
+
+  commentbox.addEventListener('input', function () {
+    setOrderDetails()
+    log(commentbox.value)
+  })
+
+  function checkNewOrder() {
+    const newOrder=localStorage.getItem('new')
+    if (newOrder==='no') btnExecute.disabled =true
+  }
+  checkNewOrder()
+  
+  function setOrderDetails() {
+    let odetails = [contractor.value, product.value, orderQuantity.value, orderDate.value, miscExp.value, commentbox.value]
+    localStorage.setItem('od', JSON.stringify(odetails));
+  }
+
+  function loadOrder() {
+    Promise.all(
+      [help.getAsList({sql: help.listSql.contractor, elementID:'contractor'}),
+      help.getAsList({ sql: help.listSql.product, elementID: 'product' })]
+    ).then(() => {
+      if (od) {
+        contractor.value=od[0]
+        product.value=od[1]
+        orderQuantity.value=od[2]
+        orderDate.value=od[3]
+        miscExp.value=od[4]
+        commentbox.value=od[5]
+        setOrderTable(ls)
+      }
+    })
+  }
  
   function resetPage() {    
     btnExecute.disabled=false
@@ -144,33 +194,82 @@ document.addEventListener('DOMContentLoaded', function (e) {
     product.value=''
     orderQuantity.value=''
     orderDate.value=''// help.sqlDate('','-')
-  }
-
-  resetOrder.title='Double Click to Reset Order'
-  resetOrder.innerText='New Order'
+    localStorage.removeItem('rs') // resmove orders form localstorage
+    localStorage.removeItem('od') // resmove order-details form localstorage
+    localStorage.setItem('new', 'yes')
+  }  
   
-  resetOrder.addEventListener('click', function () { //dblclick
-    const tblarr=Array.from(tbody.rows)
-    if (tblarr.length===0) return false
-    const confirmReset=confirm('Set New Order?')
-    if (confirmReset) {
-      resetPage()
+  function setOrderTable(order) {
+    if (order) {
+      //order table row delete btn
+      const closeButton = '<button type="button" class="btn-close delrow" style="width:4px; height: 4px;" aria-label="Close"></button>'
+      tbody.innerHTML=''
+      for (let value of order.keys()) {
+        let tr=document.createElement("tr");
+        let td=document.createElement("td");
+        tr.appendChild(td);
+        for (let key in order[value]) {
+          // log(key)
+          let td=document.createElement("td");
+          td.innerHTML=order[value][key];
+          if (key==='matid') {
+            td.innerHTML = `<a href="#" class="link-primary idcol pe-none">${order[value][key]}</a>`
+            td.setAttribute('role', 'button')
+            td.className=('text-primary idcol')
+            td.innerHTML=order[value][key]
+          }
+          if (key==='reqPerOrder') {
+            if (orderQuantity.value!=='') {
+              td.innerHTML = order[value]['unitsreq'] * +orderQuantity.value
+            } else {
+              td.innerHTML= order[value][key].toFixed(2)
+            }
+          }
+          if (key==='total') {
+            if (orderQuantity.value!=='') {
+              // log(+order[value]['costPerArticle'],  +orderQuantity.value)
+              td.innerHTML = +order[value]['costPerArticle'] * +orderQuantity.value
+            } else {
+              td.innerHTML= order[value][key].toFixed(2) //Number(order[value[key]]).toFixed(2)
+            }
+          }
+          tr.appendChild(td);
+        }
+        td=document.createElement("td");
+        td.innerHTML=closeButton
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      }
+      //add delete btn on order table
+      const tblrow=document.querySelectorAll('.delrow')
+      tblrow.forEach(function (r, i) {
+        sum= 0
+        r.addEventListener('click', function (e) {
+          // log(e.target.parentNode.parentNode.rowIndex)
+          let ri = e.target.parentNode.parentNode.rowIndex -1 // row index number
+          e.target.parentNode.parentNode.remove() // remove clickd row
+          order.splice(ri, 1) // remove corresponding row form array
+          localStorage.setItem('rs', JSON.stringify(order));
+          setTotal()
+        })
+      })
     }
-  })
+    setTotal()
+  }  
 
   //set order total
   function setTotal() {
     // const tbody=document.getElementById('tbody')
     const tblarr=Array.from(tbody.rows)
-    const odrQty=Number(orderQuantity.value)
-    let mexp = Number(miscExp.value)
+    const odrQty=orderQuantity.value?Number(orderQuantity.value):0
+    let mexp = miscExp.value?Number(miscExp.value):0
     let totalCost=0; let ppCost=0;  // ppcost = per piece cost
     tblarr.forEach(function (r) {
-      ppCost += Number(r.cells[7].innerText)  //ppcost = per piece cost
-      totalCost += Number(r.cells[8].innerText)
+      ppCost += Number(r.cells[6].innerText)  //ppcost = per piece cost
+      totalCost += Number(r.cells[9].innerText) // total cost
     })
-    // log(ppCost, totalCost)
-    articleCost.innerHTML= (ppCost + (mexp/odrQty)).toFixed(2)
+    let x = isNaN(mexp/odrQty)?ppCost:mexp/odrQty 
+    articleCost.innerHTML= (ppCost + x).toFixed(2)
     allTotal.innerHTML= (totalCost + mexp).toFixed(2)
   }
 
@@ -195,19 +294,17 @@ document.addEventListener('DOMContentLoaded', function (e) {
       url=`/api/crud/update/${table}`
       data.id = obj.id
     }
-    // log('ok',url,data)
 
     const result= await help.postData(url, data)
     if (result.status=='success') {
-      return true
-    }    
-
-    // refresh table
-    // set_and_refresh_data_table(e)
+      return result
+    }
   }
 
+  loadOrder();  
+
   // btnExecute.title = 'Click to Execute Order'
-  btnExecute.addEventListener('click', async function () {
+  btnExecute.addEventListener('click', async function () {    
     const data={}    
     data.orderId = orderId
     data.odrate= help.sqlDate(orderDate.value)
@@ -231,107 +328,78 @@ document.addEventListener('DOMContentLoaded', function (e) {
         //insert order items
         const tbody=document.getElementById('tbody')
         const tblarr=Array.from(tbody.rows)
-        tblarr.forEach(function (r, i) {
-          insertIntoMaterial+=`('${orderId}', '${r.cells[1].innerText}','${r.cells[2].innerText}','${r.cells[4].innerText}','${r.cells[5].innerText}','${r.cells[7].innerText}','${r.cells[6].innerText}','${r.cells[8].innerText}'),`
+        tblarr.forEach(function (r) {
+          insertIntoMaterial+=`('${orderId}', '${r.cells[1].innerText}', '${r.cells[2].innerText}', '${r.cells[4].innerText}', '${r.cells[5].innerText}' , '${r.cells[6].innerText}', '${r.cells[7].innerText}', '${r.cells[8].innerText}', '${r.cells[9].innerText}'),` 
         })
-        data.values = String(insertIntoMaterial).slice(0, -1) + ' RETURNING *;'
-        log(data.values)
-        let result=createUpdate({ data, table: tblName[1]})
-        if (result) {
+        data.values=String(insertIntoMaterial).slice(0, -1)+' RETURNING *;'
+        let r= await createUpdate({ data, table: tblName[1] })
+        if (r) {
           alertMsg('Order Created Successfully', 'success')
           this.disabled=true
+          localStorage.setItem('new', 'no')
         }
       }
     }
   })  
 
   // let qty = 0
-  updateQty.addEventListener('input', function () {
-    let qty = Number(updateQty.value)
+  orderQuantity.addEventListener('input', function () {
+    let qty = Number(orderQuantity.value)
     const tbody=document.getElementById('tbody')
     const tblarr=Array.from(tbody.rows)
     
     tblarr.forEach(function (r) {
-      r.cells[4].innerText = (Number(r.cells[4].innerText)).toFixed(2)      //cost
-      r.cells[6].innerText=Number(r.cells[5].innerText)*qty                 //req/order
-      r.cells[7].innerText = (Number(r.cells[7].innerText)).toFixed(2)      //cost/piece
-      r.cells[8].innerText=(Number(r.cells[7].innerText)*qty).toFixed(2)    //total
+      r.cells[4].innerText = (+r.cells[4].innerText).toFixed(2)         //cost
+      r.cells[6].innerText = (+r.cells[6].innerText).toFixed(2)         //cost/piece
+      r.cells[8].innerText= ((+r.cells[5].innerText) * qty).toFixed(2)  //req/order
+      r.cells[9].innerText=(+r.cells[6].innerText* qty).toFixed(2)      //total
     })
     setTotal()
+    setOrderDetails()
   })
 
   
   miscExp.addEventListener('input', function () {
     setTotal()
-  })
-  
+    setOrderDetails()
+  })  
+
+  //all order tbable work is done here.
   btnSubmit.addEventListener('click', function (e) {
     e.preventDefault();
     
+    //get data form modal form
     const data=help.formDataToJson(new FormData(modalForm))
-    // const pcode=help.getPureValue(product.value)     
-    
-    let { material, unitcost, unitype, unitreq }=data
-
-    const closeButton = '<button type="button" class="btn-close delrow" style="width:4px; height: 4px;" aria-label="Close"></button>'
+    //de-structur modal form data
+    let { material, unitcost, unitype, unitreq, unitsavl }=data    
 
     unitcost=Number(unitcost)
     unitreq= Number(unitreq)
     
-    if (unitcost===0) return false    
+    //if material form unit cost is 0 then do nothing
+    if (unitcost===0) return false
     let odrqty=Number(orderQuantity.value)
-    let items={}
+    let items={} //delclare empty items object
+    //insert key-values in items object
     items.matid=help.getPureValue(material)
     items.mname=help.getPureValue(material,0)
-    items.utype=unitype
-    items.ucost=unitcost
-    items.unitsreq=unitreq //unit required per order
-    items.reqPerOrder=items.unitsreq * odrqty // req per order
+    items.utype=unitype   // unit type
+    items.ucost=unitcost  // unit cost
+    items.unitsreq=unitreq //unit required per piece
     items.costPerArticle=unitcost * unitreq // cost per article
+    items.unitsavl= +unitsavl // total units available
+    items.reqPerOrder=items.unitsreq * odrqty // units req per order
     items.total = items.costPerArticle * odrqty  // total
-    // let { matid, mname, utype, ucost, unitsreq, reqPerOrder, costPerArticle, total }=items
     
+    //add items to order array
+    // order.push(items)
     order.push(items)
-
-    tbody.innerHTML = ''
-    for (let value of order.keys()) {
-      let tr=document.createElement("tr");
-      let td=document.createElement("td");
-      tr.appendChild(td);
-      for (let key in order[value]) {
-        // log(key)
-        let td=document.createElement("td");
-        td.innerHTML=order[value][key];
-        if (key==='matid') {
-          td.innerHTML = `<a href="#" class="link-primary idcol pe-none">${order[value][key]}</a>`
-          td.setAttribute('role', 'button')
-          td.className=('text-primary idcol')
-          td.innerHTML=order[value][key]
-        }
-        if (key==='total') {
-          log(order[value][key].toFixed(2))
-          td.innerHTML= order[value][key].toFixed(2) //Number(order[value[key]]).toFixed(2)
-        }
-        tr.appendChild(td);
-      }
-      td=document.createElement("td");
-      td.innerHTML=closeButton
-      tr.appendChild(td);
-      tbody.appendChild(tr);
-    }
-
-    const tblrow=document.querySelectorAll('.delrow')
-    tblrow.forEach(function (r, i) {
-      sum= 0
-      r.addEventListener('click', function (e) {
-        // log(e.target.parentNode.parentNode.rowIndex)
-        let ri = e.target.parentNode.parentNode.rowIndex -1 // row index number
-        e.target.parentNode.parentNode.remove() // remove clickd row
-        order.splice(ri, 1) // remove corresponding row form array
-        setTotal()
-      })
-    })
-    setTotal()
+    localStorage.setItem('rs', JSON.stringify(order));
+    order=JSON.parse(localStorage.getItem('rs'))
+    
+    setOrderTable(order)
+    setOrderDetails()
+    
     // ottl=order.map(item => item.total).reduce((prev, curr) => prev+curr, 0);
     
     modalForm.reset();

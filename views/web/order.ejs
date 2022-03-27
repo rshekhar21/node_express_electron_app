@@ -20,8 +20,8 @@
 
       <!-- 2nd row -->
       <div class="col-md-4">
-        <label for="untavailable" class="form-label">Unit Availabe</label>
-        <input type="number" class="form-control" id="untavailable" name="untavailable" disabled>
+        <label for="unitsavl" class="form-label">Unit Availabe</label>
+        <input type="number" class="form-control" id="unitsavl" name="unitsavl" readonly >
       </div>
       <div class="col-md-4">
         <label for="unitcost" class="form-label">Unit Cost</label>
@@ -137,14 +137,14 @@
         <th scope="col">#</th>
         <th scope="col">matid</th>
         <th scope="col">Material Name</th>
-        <th scope="col">Type</th>
-        <th scope="col">Cost</th>
-        <th scope="col">Req/Piece</th>
-        <th scope="col">Req/Order</th>
-        <th scope="col">Cost/Piece</th>
-        <!-- <th scope="col">Given</th> -->
-        <th scope="col">Total</th>
-        <th scope="col">!</th>
+        <th scope="col" title="Unit Type">Type</th>
+        <th scope="col" title="Unit Cost">Cost</th>
+        <th scope="col" title="Required per Piece">Req/Piece</th>
+        <th scope="col" title="Cost per Piece">Cost/Piece</th>
+        <th scope="col" title="Available with contractor">Availabe</th>
+        <th scope="col" title="Required per Order">Req/Order</th>
+        <th scope="col" title="Tocal cost per Order">Total</th>
+        <th scope="col" title="Delete row">!</th>
       </tr>
     </thead>
     <tbody id="tbody"></tbody>
