@@ -1,20 +1,16 @@
 import help from './helper.js'
 
-document.addEventListener('DOMContentLoaded', function (e) {
+document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('page-heading').innerHTML="Create New Order"
   document.getElementById('staticBackdropLabel').innerHTML="Add Material"
 
   
   
   const myModal=document.getElementById('staticBackdrop')
-  const Modal=new bootstrap.Modal(document.getElementById('staticBackdrop'), {
-    keyboard: false
-  })
   const log=console.log
   const tblName = ['orders', 'orderitems']
   const btnSubmit=document.getElementById('submit')
   const btnShowModal=document.getElementById('first-groupbtn')  
-  const inputForm=document.getElementById('input-form')
   const modalForm=document.getElementById('modal-form')
   const orderForm=document.getElementById('order-form')
   const inputFocus=document.getElementById('material')
@@ -24,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
   const btnExecute=document.getElementById('execute')
   const subHead=document.getElementById('page-subhead')
   const material=document.querySelector('#material')
-  const orderTable=document.querySelector('#order-table')
   const tbody=document.getElementById('tbody')
   const btnGroupRight=document.getElementById('btnGroup1')
   const orderId=`o_${help.uuid(5)}`
@@ -36,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
   const product=document.querySelector('#product')
   const orderQuantity = document.getElementById('orderqty')
   const orderDate=document.querySelector('#orderdate')
-  const updateQty=document.getElementById('orderqty')  
   const btnViewAlocaedList=document.getElementById('second-groupbtn')
   const commentbox=document.getElementById('commentbox')
   
@@ -61,13 +55,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
   //data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"
 
   var myOffcanvas = document.getElementById('myOffcanvas')
-  var bsOffcanvas=new bootstrap.Offcanvas(myOffcanvas)
   
-  myOffcanvas.addEventListener('show.bs.offcanvas', function (e) {
+  myOffcanvas.addEventListener('show.bs.offcanvas', function () {
     // const contractor=document.querySelector('#contractor').value
     // if (contractor==='') e.preventDefault() 
   })
-  myOffcanvas.addEventListener('hide.bs.offcanvas', function (e) {
+  myOffcanvas.addEventListener('hide.bs.offcanvas', function () {
     document.getElementById('offcanvasTopLabel').innerHTML =''
   })
   
@@ -122,7 +115,6 @@ document.addEventListener('DOMContentLoaded', function (e) {
         // let sql=`select qty_used from ( select i.matid , a.qg - sum(i.untsreq_perorder) qty_used from orderitems i left join orders o on i.orderid = o.orderid left join (select matid, sum(qty_given) qg from allocate where cntr_id = '${cntid}' group by matid) a on a.matid = i.matid where o.cntr_id = '${cntid}' group by i.matid, i.untsreq_perorder, a.qg) q where q.matid = '${matid}'`
 
         let sql = `select qyt_aval from ( select a.matid, a.cntr_id, sum(a.qty_given) units_given, coalesce(s.cunsumed,0) cunsumed, coalesce(sum(a.qty_given),0) - coalesce(s.cunsumed,0) qyt_aval from allocate a left join ( select i.matid, o.cntr_id, sum(i.untsreq_perorder) cunsumed from orderitems i left join orders o on o.orderid = i.orderid group by i.matid, o.cntr_id ) s on a.matid = s.matid where a.cntr_id = '${cntid}' group by a.matid, a.cntr_id, s.cunsumed ) q WHERE q.matid = '${matid}'`
-        let url=`/api/crud/select/query/?sql=${sql}`
         // log(sql)
         // let d=await help.getData(url)
         let r=await help.queryResult(sql)
@@ -242,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       }
       //add delete btn on order table
       const tblrow=document.querySelectorAll('.delrow')
-      tblrow.forEach(function (r, i) {
+      tblrow.forEach(function (r) {
         sum= 0
         r.addEventListener('click', function (e) {
           // log(e.target.parentNode.parentNode.rowIndex)
@@ -407,12 +399,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
   })
 
   // reset-from button click function
-  btnReset.addEventListener('click', function (e) {
+  btnReset.addEventListener('click', function () {
     modalForm.reset()
     inputFocus.focus()
   })
   
-  btnViewAlocaedList.addEventListener('click', function (e) {
+  btnViewAlocaedList.addEventListener('click', function () {
     const cntid=help.getPureValue(contractor.value)
     const cntrName = help.getPureValue(contractor.value, 0) 
     
