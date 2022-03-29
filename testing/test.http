@@ -1,11 +1,3 @@
-POST http://localhost:3333/sys/setup HTTP/1.1
-content-type: application/json
-
-{
-  "key": "shekhar83#"
-}
-
-###
 
 GET http://localhost:3333/api/crud/select/query?sql=SELECT * FROM party;
 
@@ -100,3 +92,64 @@ content-type: application/json
 
 ###
 GET http://localhost:3333/api/crud/select/query?sql=select id, party, fullname, to_char(entry_date, 'DD/MM/YYYY'), amt_paid, amt_received, pymt_mode, narraction commetns from daybook where entry_date = '2022/03/01' order by entry_date desc;
+
+###
+
+POST http://localhost:3333/sys/config
+content-type: application/json 
+
+{
+  "host": "localhost",
+  "user": "postgres",
+  "port": "5432",
+  "password": "269608",
+  "database": "abcd",
+  "max": 20,
+  "idleTimeoutMillis": 30000,
+  "connectionTimeoutMillis": 2000,
+  "key": "shekhar83#"
+}
+
+###
+
+POST http://localhost:3333/sys/setup HTTP/1.1
+content-type: application/json
+
+{
+  "key": "shekhar83#"
+}
+
+###
+
+
+POST http://localhost:3333/sys/create
+content-type: application/json 
+
+{
+  "host": "localhost",
+  "user": "postgres",
+  "port": "5432",
+  "password": "269608",
+  "database": "ebook",
+  "max": 20,
+  "idleTimeoutMillis": 30000,
+  "connectionTimeoutMillis": 2000,
+  "key": "shekhar83#"
+}
+
+###
+
+POST http://localhost:3333/sys/drop
+content-type: application/json 
+
+{
+  "host": "localhost",
+  "user": "postgres",
+  "port": "5432",
+  "password": "269608",
+  "database": "abcd2",
+  "max": 20,
+  "idleTimeoutMillis": 30000,
+  "connectionTimeoutMillis": 2000,
+  "key": "shekhar83#"
+}

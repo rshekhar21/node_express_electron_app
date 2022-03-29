@@ -101,7 +101,6 @@ async function altdetails(data) {
 }
 
 
-
 module.exports = {
   party,
   product,

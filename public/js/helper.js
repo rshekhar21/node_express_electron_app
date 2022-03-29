@@ -232,6 +232,9 @@ function setPage(obj) {
     thirdButtonName='Home'
   }=obj
   document.getElementById('page-heading').innerHTML=title
+  document.getElementById('first-groupbtn').innerHTML=firstButtonName
+  document.getElementById('second-groupbtn').innerHTML=secondButtonName
+  document.getElementById('third-groupbtn').innerHTML=thirdButtonName
   const btnbar = document.getElementById('btn-bar')
   if (!displayButtonBar) btnbar.classList.add('d-none')
 }

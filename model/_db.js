@@ -3,40 +3,54 @@ const fs=require('fs')
 const path = require('path')
 const pgtools=require('pgtools')
 const log=console.log;
-const config = {
-  user: "postgres",
-  host: "localhost",
-  port: '5432',
-  password: "269608",
-};
+const cs=require('./config.json')
 
-
-function createDB() {
-  pgtools.createdb(config, 'myebook', function (err, res) {
-    if (err) {
-      log(err)
-      process.exit(-1)
-      // return
-    }
-    log(res)
+function createConfig(data) {
+  fs.writeFileSync('./model/config.json', JSON.stringify(data), 'utf-8', function (err) {
+    if (err) throw err;
   })
+  return true
 }
 
-function dropDB() {
-  pgtools.dropdb(config, 'myebook', function (err, res) {
-    if (err) {
-      log(err)
-      process.exit(-1)
-      // return
-    }
-    log(res)
-  })
+
+// const config = {
+//   user: cs.user,
+//   host: cs.host,
+//   port: cs.port,
+//   password: cs.password,
+// };
+
+
+async function createDB(data) {   
+  const config={
+    user: data.user,
+    host: data.host,
+    port: data.port,
+    password: data.password
+  } 
+  try {
+    let rs=await pgtools.createdb(config, data.database) 
+    createConfig(data) 
+    return rs
+  } catch (error) {
+    return error.name
+  }
 }
 
-function test() {
-  log('ok')
+async function dropDB(data) {  
+  const config={
+    user: data.user,
+    host: data.host,
+    port: data.port,
+    password: data.password
+  } 
+  try {
+    let rs=await pgtools.dropdb(config, data.database)
+    return rs
+  } catch (error) {
+    return error.name
+  }
 }
-
 
 
 const cnstr = {
@@ -52,7 +66,7 @@ const cnstr = {
 
 
 
-const Pool=new pg.Pool(cnstr)
+const Pool=new pg.Pool(cs)
 
 
 
@@ -122,7 +136,7 @@ async function rq(filename) {
 
 
 
-module.exports = {runSql, readQuery, tables, createDB, dropDB}
+module.exports = {runSql, readQuery, tables, createDB, dropDB, createConfig}
 
 // pool.end(() => {
 //   console.log('pool has ended')

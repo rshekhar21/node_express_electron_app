@@ -1,4 +1,5 @@
-const { readQuery, runSql, tables } = require('./_db')
+const { readQuery, runSql, tables, createDB, dropDB, createConfig }=require('./_db')
+const log=console.log;
 let sql = '';
 
 async function setupDatabase(key) {
@@ -6,8 +7,7 @@ async function setupDatabase(key) {
     // console.log(key)
     return 'Invalid Key'
   } else {
-    try {
-      
+    try {      
       //drop all
       sql = await readQuery('all', 'd')
       await runSql(sql);
@@ -71,4 +71,40 @@ async function setupDatabase(key) {
   }  
 }
 
-module.exports = {setupDatabase};
+async function createdb(data) {
+  try {
+    let rs=await createDB(data)
+    if (rs==='duplicate_database') throw { error: rs }
+    return {msg: `database created successfully`,rs} //
+  } catch (error) {
+    return error
+  }
+}
+
+async function dropdb(data) {
+  try {
+    let rs=await dropDB(data)
+    if(rs==='invalid_catalog_name' || rs=== 'drop_database_in_use') throw {error: rs}
+    return {msg: `database dropped successfully`,rs} //
+  } catch (error) {
+    return error
+  }
+}
+
+
+function config(data) {
+  const { key }=data;
+  if (key !=='shekhar83#') {
+    return 'Invalid Key'
+  } else {
+    try {
+      createConfig(data)
+      return 'config file created successfully'
+    } catch (error) {
+      return error
+    }
+  }
+}
+
+
+module.exports = {setupDatabase, createdb, dropdb, config};
